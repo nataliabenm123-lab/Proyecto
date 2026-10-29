@@ -3,3 +3,4 @@ menu = {"callos a la madrileña": 12,
         "cocido madrileño": 20}
 print (menu)
 
+print("Remove")
