@@ -1,0 +1,8 @@
+print("===== GESTIÓN DEL RESTAURANTE =====")
+print("1. Cargar restaurante")
+print("2. Cargar nuevas peticiones de grupos")
+print("3. Tomar un pedido")
+print("4. Cobrar y liberar una mesa")
+print("5. Ampliar el menú")
+print("6. Consultar estado")
+print("7. Salir")
