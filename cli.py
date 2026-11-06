@@ -1,3 +1,4 @@
+import gestor_json
 def mostrar_menu():
     print("===== GESTIÓN DEL RESTAURANTE =====")
     print("1. Cargar restaurante")
@@ -16,8 +17,17 @@ def main():
         if opcion == "7":                      
             print("Saliendo del programa...")
             break
-        elif opcion in ["1","2","3","4","5","6"]:
+        #agregamos esta linea para que lea json
+        elif opcion =="1":
+            nombres=gestor_json.listar_restaurantes("restaurantes")
+            print("restaurantes disponibles:")
+            for nombre in nombres:
+                print(nombre)
+        
+        elif opcion in ["2","3","4","5","6"]:
             print("has elegido la opcion:",opcion)
         else:
             print("Opción no válida. Escribe un número del 1 al 7")
 main()
+
+
