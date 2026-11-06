@@ -1,0 +1,5 @@
+{"nombre":"la tasca",
+"ubicacion":"valencia",
+"capacidad":30,
+"max_mesas":4,
+"menu":{"paella":15,"tortilla":8,"flan":4}}

@@ -1,0 +1,5 @@
+{"nombre":"el pescadito",
+"ubicacion":"coruña",
+"capacidad":40,
+"mesas_max":8,
+"menu":{"pescadito frito": 14,"tortillitas de camarones": 9,"ortiguillas fritas":11}}
