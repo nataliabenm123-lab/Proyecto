@@ -10,6 +10,7 @@ def mostrar_menu():
     print("7. Salir")
 
 def main():
+    restaurante = None
     while True:
         mostrar_menu()
         opcion=input("elige una opcion:")
@@ -21,8 +22,8 @@ def main():
         elif opcion =="1":
             nombres=gestor_json.listar_restaurantes("restaurantes")
             print("restaurantes disponibles:")
-            for nombre in nombres:
-                print(nombre)
+            for numero,nombre in enumerate (nombres,start=1):
+                print(numero,"-",nombre)
         
         elif opcion in ["2","3","4","5","6"]:
             print("has elegido la opcion:",opcion)
