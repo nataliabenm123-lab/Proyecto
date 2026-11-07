@@ -1,4 +1,6 @@
 import gestor_json
+import gestion_mesas
+
 def mostrar_menu():
     print("===== GESTIÓN DEL RESTAURANTE =====")
     print("1. Cargar restaurante")
@@ -51,9 +53,17 @@ def main():
                 if eleccion.isdigit() and 1 <= int(eleccion) <= len(archivos):
                     archivo_elegido = archivos[int(eleccion) - 1]
                     grupos = gestor_json.cargar_grupos("mesas", archivo_elegido)
-                    print("Grupos cargados:", grupos)
+                    no_sentados = gestion_mesas.sentar_grupos(restaurante, grupos)
+                    print("Grupos recibidos:", len(grupos))
+                    print("Grupos sentados:", len(grupos) - len(no_sentados))
+                    print("Ocupación actual:", restaurante["ocupacion"], "de", restaurante["capacidad"])
+                    if len(no_sentados) > 0:
+                        print("No han podido sentarse:")
+                        for grupo in no_sentados:
+                            print("- grupo de", grupo["clientes"], "personas")
                 else:
                     print("Opción no válida.")
+                
 
         elif opcion in ["3","4","5","6"]:
 
