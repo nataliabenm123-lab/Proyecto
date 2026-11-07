@@ -3,7 +3,7 @@ def sentar_grupos(restaurante, grupos):
     for grupo in grupos:
         clientes = grupo["clientes"]
         hay_aforo = restaurante["ocupacion"] + clientes <= restaurante["capacidad"]
-        hay_mesa = len(restaurante["mesas"]) < restaurante["mesas_max"]
+        hay_mesa = len(restaurante["mesas"]) < restaurante["max_mesas"]
         if hay_aforo and hay_mesa:
             restaurante["mesas"].append({"clientes": clientes})
             restaurante["ocupacion"] = restaurante["ocupacion"] + clientes

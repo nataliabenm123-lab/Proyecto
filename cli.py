@@ -54,6 +54,7 @@ def main():
                     archivo_elegido = archivos[int(eleccion) - 1]
                     grupos = gestor_json.cargar_grupos("mesas", archivo_elegido)
                     no_sentados = gestion_mesas.sentar_grupos(restaurante, grupos)
+                    print(restaurante["mesas"])
                     print("Grupos recibidos:", len(grupos))
                     print("Grupos sentados:", len(grupos) - len(no_sentados))
                     print("Ocupación actual:", restaurante["ocupacion"], "de", restaurante["capacidad"])
@@ -61,6 +62,7 @@ def main():
                         print("No han podido sentarse:")
                         for grupo in no_sentados:
                             print("- grupo de", grupo["clientes"], "personas")
+                    
                 else:
                     print("Opción no válida.")
                 
