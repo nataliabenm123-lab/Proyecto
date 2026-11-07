@@ -24,7 +24,13 @@ def main():
             print("restaurantes disponibles:")
             for numero,nombre in enumerate (nombres,start=1):
                 print(numero,"-",nombre)
-        
+            eleccion=input("Elige un restaurante (número): ")
+            if eleccion.isdigit() and 1 <= int(eleccion) <= len(nombres):
+                archivo_elegido = nombres[int(eleccion) - 1]
+                restaurante = gestor_json.cargar_restaurante("restaurantes", archivo_elegido)
+                print("Restaurante cargado:", restaurante["nombre"])
+            else:
+                print("Opción no válida.")
         elif opcion in ["2","3","4","5","6"]:
             print("has elegido la opcion:",opcion)
         else:
