@@ -28,6 +28,11 @@ def main():
             if eleccion.isdigit() and 1 <= int(eleccion) <= len(nombres):
                 archivo_elegido = nombres[int(eleccion) - 1]
                 restaurante = gestor_json.cargar_restaurante("restaurantes", archivo_elegido)
+                restaurante["mesas"] = []
+                restaurante["ocupacion"] = 0
+                restaurante["ganancias"] = 0
+                
+                print(restaurante)
                 print("Restaurante cargado:", restaurante["nombre"])
             else:
                 print("Opción no válida.")
