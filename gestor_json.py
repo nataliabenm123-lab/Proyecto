@@ -2,7 +2,7 @@
 import json
 from pathlib import Path
 
-def listar_restaurantes(ruta):
+def listar_archivos(ruta):
     nombres = []
     for archivo in sorted(Path(ruta).glob("*.json")):
         nombres.append(archivo.name)
