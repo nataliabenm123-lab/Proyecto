@@ -19,9 +19,11 @@ def main():
             print("Saliendo del programa...")
             break
         #agregamos esta linea para que lea json
+
         elif opcion =="1":
-            nombres=gestor_json.listar_restaurantes("restaurantes")
+            nombres=gestor_json.listar_archivos("restaurantes")
             print("restaurantes disponibles:")
+
             for numero,nombre in enumerate (nombres,start=1):
                 print(numero,"-",nombre)
             eleccion=input("Elige un restaurante (número): ")
@@ -36,11 +38,30 @@ def main():
                 print("Restaurante cargado:", restaurante["nombre"])
             else:
                 print("Opción no válida.")
-        elif opcion in ["2","3","4","5","6"]:
+
+        elif opcion =="2":
+            if restaurante is None:
+                print("Primero debes cargar un restaurante(opción 1).")
+            else:
+                archivos = gestor_json.listar_archivos("mesas")
+                print("Grupos disponibles:")
+                for numero, nombre in enumerate(archivos, start=1):
+                    print (numero, "-", nombre)
+                eleccion = input("Elige un archivo de grupos (número):")
+                if eleccion.isdigit() and 1 <= int(eleccion) <= len(archivos):
+                    archivo_elegido = archivos[int(eleccion) - 1]
+                    grupos = gestor_json.cargar_grupos("mesas", archivo_elegido)
+                    print("Grupos cargados:", grupos)
+                else:
+                    print("Opción no válida.")
+
+        elif opcion in ["3","4","5","6"]:
+
             if restaurante is None:
                 print("primero debes cargar un restaurante (opcion 1)")
             else:
                 print("has elegido la opcion:", opcion)
+
         else:
             print("Opción no válida. Escribe un número del 1 al 7")
 main()
