@@ -27,12 +27,15 @@ def main():
             eleccion=input("Elige un restaurante (número): ")
             if eleccion.isdigit() and 1 <= int(eleccion) <= len(nombres):
                 archivo_elegido = nombres[int(eleccion) - 1]
+                
+                #Esa línea de abajo lee el JSON del restaurante elegido y guarda el diccionario en restaurante, sustituyendo el None.
+                # Justo debajo van las tres líneas que añaden mesas, ocupacion y ganancias.
                 restaurante = gestor_json.cargar_restaurante("restaurantes", archivo_elegido)
                 restaurante["mesas"] = []
                 restaurante["ocupacion"] = 0
                 restaurante["ganancias"] = 0
-                
-                print(restaurante)
+
+                #print(restaurante)
                 print("Restaurante cargado:", restaurante["nombre"])
             else:
                 print("Opción no válida.")
