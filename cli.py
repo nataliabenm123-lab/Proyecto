@@ -32,7 +32,10 @@ def main():
             else:
                 print("Opción no válida.")
         elif opcion in ["2","3","4","5","6"]:
-            print("has elegido la opcion:",opcion)
+            if restaurante is None:
+                print("primero debes cargar un restaurante (opcion 1)")
+            else:
+                print("has elegido la opcion:", opcion)
         else:
             print("Opción no válida. Escribe un número del 1 al 7")
 main()
