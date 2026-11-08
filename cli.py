@@ -18,7 +18,7 @@ def main():
         opcion=input("elige una opcion:")
         
         if opcion == "7":                      
-            print("Saliendo del programa...")
+            print("Saliendo del programa...", "\n", "OUT")
             break
         #agregamos esta linea para que lea json
 
@@ -69,27 +69,35 @@ def main():
         elif opcion == "3":
             if restaurante is None:
                 print("Primero debes cargar un restaurante (opción 1).")
-
             elif len(restaurante["mesas"]) == 0:
-                print("No hay mesas ocupadas.")
-
+                print("No hay mesas ocupadas. Siéntalas primero con la opción 2.")
             else:
-                print("Mesas disponibles:")
-
-                for numero, mesa in enumerate(restaurante["mesas"], start=1):
-                    print(numero, "-", mesa["clientes"], "clientes -", mesa["estado"])
-
-                eleccion = input("Elige una mesa (número): ")
-
-                if eleccion.isdigit() and 1 <= int(eleccion) <= len(restaurante["mesas"]):
-                    mesa = restaurante["mesas"][int(eleccion) - 1]
-
-                    if mesa["estado"] == "ocupada":
-                        gestion_mesas.tomar_pedido(mesa, restaurante["menu"])
+                continuar = "s"
+                while continuar == "s":
+                    pendientes = 0
+                    print("Mesas pendientes de atender:")
+                    for numero, mesa in enumerate(restaurante["mesas"], start=1):
+                        if mesa["estado"] == "ocupada":
+                            print(numero, "- grupo de", mesa["clientes"], "personas")
+                            pendientes = pendientes + 1
+                    if pendientes == 0:
+                        print("Todas las mesas han sido atendidas.")
+                        break
+                    eleccion = input("Elige una mesa (número): ")
+                    if eleccion.isdigit() and 1 <= int(eleccion) <= len(restaurante["mesas"]):
+                        mesa_elegida = restaurante["mesas"][int(eleccion) - 1]
+                        if mesa_elegida["estado"] == "ocupada":
+                            gestion_mesas.tomar_pedido(mesa_elegida, restaurante["menu"])
+                            print("Pedido registrado:", mesa_elegida["pedido"])
+                        else:
+                            print("Esa mesa ya tiene pedido.")
                     else:
-                        print("Esta mesa ya tiene un pedido.")
-                else:
-                    print("Opción no válida.")
+                        print("Opción no válida.")
+                    continuar = input("¿Quieres atender otra mesa? (s/n): ").lower()
+
+
+
+
         elif opcion in ["4","5","6"]:
 
             if restaurante is None:
@@ -99,6 +107,6 @@ def main():
 
         else:
             print("Opción no válida. Escribe un número del 1 al 7")
+
+
 main()
-
-
