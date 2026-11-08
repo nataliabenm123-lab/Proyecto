@@ -43,7 +43,7 @@ def main():
 
         elif opcion =="2":
             if restaurante is None:
-                print("Primero debes cargar un restaurante(opción 1).")
+                print("Primero debes elegir un restaurante(opción 1).")
             else:
                 archivos = gestor_json.listar_archivos("mesas")
                 print("Grupos disponibles:")
@@ -66,8 +66,31 @@ def main():
                 else:
                     print("Opción no válida.")
                 
+        elif opcion == "3":
+            if restaurante is None:
+                print("Primero debes cargar un restaurante (opción 1).")
 
-        elif opcion in ["3","4","5","6"]:
+            elif len(restaurante["mesas"]) == 0:
+                print("No hay mesas ocupadas.")
+
+            else:
+                print("Mesas disponibles:")
+
+                for numero, mesa in enumerate(restaurante["mesas"], start=1):
+                    print(numero, "-", mesa["clientes"], "clientes -", mesa["estado"])
+
+                eleccion = input("Elige una mesa (número): ")
+
+                if eleccion.isdigit() and 1 <= int(eleccion) <= len(restaurante["mesas"]):
+                    mesa = restaurante["mesas"][int(eleccion) - 1]
+
+                    if mesa["estado"] == "ocupada":
+                        gestion_mesas.tomar_pedido(mesa, restaurante["menu"])
+                    else:
+                        print("Esta mesa ya tiene un pedido.")
+                else:
+                    print("Opción no válida.")
+        elif opcion in ["4","5","6"]:
 
             if restaurante is None:
                 print("primero debes cargar un restaurante (opcion 1)")

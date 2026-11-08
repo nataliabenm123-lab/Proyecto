@@ -12,20 +12,27 @@ def sentar_grupos(restaurante, grupos):
     return no_sentados
 
 def tomar_pedido(mesa, menu):
-    print("Menú:")
+
+    print("Menú del restaurante:")
     for plato, precio in menu.items():
-        print("-", plato, ":", precio, "€")
-    while True:
-        plato = input("Plato (o 'fin' para terminar): ").strip()
-        if plato == "fin":
-            break
-        elif plato in menu:
-            mesa["pedido"].append(plato)
-            print("Añadido:", plato)
-        else:
+        print(plato, "-", precio, "€")
+
+    pedidos = []
+
+    for cliente in range(1, mesa["clientes"] + 1):
+        pedido = input(f"¿Qué desea pedir el cliente {cliente}? ")
+
+        while pedido not in menu:
             print("Ese plato no está en el menú.")
-    if len(mesa["pedido"]) > 0:
-        mesa["estado"] = "con pedido"
+            pedido = input(f"¿Qué desea pedir el cliente {cliente}? ")
+
+        pedidos.append(pedido)
+
+    mesa["pedido"] = pedidos
+    mesa["estado"] = "con pedido"
+
+    print("Pedido registrado correctamente.")
+    print("Platos pedidos:", pedidos)
 
 
 
