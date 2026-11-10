@@ -1,5 +1,15 @@
-{"nombre":"casa pepe",
-"ubicacion":"madrid",
-"capacidad":50,
-"max_mesas":5,
-"menu":{"callos a la madrileña":12,"bocata de calamares":5,"cocido madrileño":20}}
+{
+    "nombre": "casa pepe",
+    "ubicacion": "madrid",
+    "capacidad": 50,
+    "max_mesas": 5,
+    "menu": {
+        "callos a la madrileña": 12,
+        "bocata de calamares": 5,
+        "cocido madrileño": 20,
+        "croquetas": 12.0
+    },
+    "mesas": [],
+    "ocupacion": 0,
+    "ganacias": 0
+}

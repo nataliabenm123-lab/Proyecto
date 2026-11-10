@@ -13,12 +13,14 @@ def mostrar_menu():
 
 def main():
     restaurante = None
+    ruta_restaurante = None
+
     while True:
         mostrar_menu()
         opcion=input("elige una opcion:")
         
         if opcion == "7":                      
-            print("Saliendo del programa...", "\n", "OUT")
+            print("Saliendo del programa...", "\n","--OUT--")
             break
         #agregamos esta linea para que lea json
 
@@ -31,10 +33,11 @@ def main():
             eleccion=input("Elige un restaurante (número): ")
             if eleccion.isdigit() and 1 <= int(eleccion) <= len(nombres):
                 archivo_elegido = nombres[int(eleccion) - 1]
+                ruta_restaurante = "restaurantes/" + archivo_elegido
                 restaurante = gestor_json.cargar_restaurante("restaurantes", archivo_elegido)
                 restaurante["mesas"]=[]
                 restaurante["ocupacion"]=0
-                restaurante["ganacias"]=0
+                restaurante["ganancias"]=0
                 print(restaurante)
 
                 print("Restaurante cargado:", restaurante["nombre"])
@@ -143,13 +146,80 @@ def main():
                         print("Número de mesa no válido.")
 
 
-
-        elif opcion in ["5","6"]:
+        elif opcion == "5":
 
             if restaurante is None:
-                print("primero debes cargar un restaurante (opcion 1)")
+                print("Primero debes cargar un restaurante (opción 1).")
+
             else:
-                print("has elegido la opcion:", opcion)
+                plato = input("¿Qué plato desea añadir?: ").strip()
+
+                while plato == "":
+                    print("El nombre no puede estar vacío.")
+                    plato = input("Nombre del plato: ").strip()
+
+                if plato in restaurante["menu"]:
+                    print("Ese plato ya existe. Se actualizará su precio.")
+
+                while True:
+                    try:
+                        precio = float(
+                            input("Precio del plato: ").strip().replace(",", ".")
+                        )
+
+                        if 0 < precio < float("inf"):
+                            break
+                        else:
+                            print("Introduce un precio positivo y finito.")
+
+                    except ValueError:
+                        print("Precio no válido. Introduce un número.")
+
+                gestion_mesas.actualizar_menu(restaurante, plato, precio)
+
+                try:
+                    gestor_json.guardar_restaurante(
+                        restaurante, ruta_restaurante
+                    )
+
+                except OSError:
+                    print("El menú se ha actualizado en el programa,")
+                    print("pero no se ha podido guardar en el archivo JSON.")
+
+                else:
+                    print(f"Plato guardado: {plato} - {precio:.2f} €")
+
+
+        elif opcion == "6":
+
+            if restaurante is None:
+                print("Primero debes cargar un restaurante (opción 1).")
+
+            else:
+                print("\nESTADO DEL RESTAURANTE")
+                print("Nombre:", restaurante["nombre"])
+                print("Capacidad:", restaurante["capacidad"], "personas")
+                print("Ocupación actual:", restaurante["ocupacion"], "personas")
+
+                print("\nMESAS ACTIVAS")
+
+                if len(restaurante["mesas"]) == 0:
+                    print("No hay mesas activas.")
+
+                else:
+                    for numero, mesa in enumerate(restaurante["mesas"], start=1):
+                        print("Mesa", numero)
+                        print("Clientes:", mesa["clientes"])
+                        print("Estado:", mesa["estado"])
+                        print("Pedido:", mesa["pedido"])
+
+                print("\nMENÚ COMPLETO")
+
+                for plato, precio in restaurante["menu"].items():
+                    print(f"- {plato}: {precio:.2f} €")
+
+                print("\nGANANCIAS")
+                print(f"Total acumulado: {restaurante['ganancias']:.2f} €")
 
         else:
             print("Opción no válida. Escribe un número del 1 al 7")
