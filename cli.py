@@ -97,6 +97,51 @@ def main():
 
         elif opcion == "4":
 
+            if restaurante is None:
+                print("Primero debes cargar un restaurante (opción 1).")
+
+            else:
+                print("Mesas disponibles para cobrar:")
+                pendientes = 0
+
+                for numero, mesa in enumerate(restaurante["mesas"], start=1):
+                    if mesa["estado"] == "con pedido":
+                        print(numero, "-", mesa["clientes"], "clientes")
+                        pendientes += 1
+
+                if pendientes == 0:
+                    print("No hay mesas disponibles para cobrar.")
+
+                else:
+                    eleccion = input(
+                        "Elige la mesa que quieres cobrar (número): "
+                    ).strip()
+
+                    if (
+                        eleccion.isdecimal()
+                        and 1 <= int(eleccion) <= len(restaurante["mesas"])
+                    ):
+                        mesa_elegida = restaurante["mesas"][int(eleccion) - 1]
+
+                        if mesa_elegida["estado"] == "con pedido":
+                            total = gestion_mesas.cobrar_mesa(
+                                restaurante, mesa_elegida
+                            )
+
+                            print(f"Cuenta de la mesa {int(eleccion)}: {total:.2f} €")
+                            print("Mesa cobrada y liberada correctamente.")
+                            print("Ocupación actual:", restaurante["ocupacion"])
+                            print(
+                                f"Ganancias de esta noche: "
+                                f"{restaurante['ganancias']:.2f} €"
+                            )
+
+                        else:
+                            print("Esta mesa todavía no tiene un pedido.")
+
+                    else:
+                        print("Número de mesa no válido.")
+
 
 
         elif opcion in ["5","6"]:
