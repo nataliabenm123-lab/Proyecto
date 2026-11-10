@@ -77,7 +77,7 @@ def main():
                     pendientes = 0
                     print("Mesas pendientes de atender:")
                     for numero, mesa in enumerate(restaurante["mesas"], start=1):
-                        if mesa["estado"] == "ocupada":
+                        if mesa["estado"] == "socupada":
                             print(numero, "- grupo de", mesa["clientes"], "personas")
                             pendientes = pendientes + 1
                     if pendientes == 0:
@@ -95,10 +95,11 @@ def main():
                         print("Opción no válida.")
                     continuar = input("¿Quieres atender otra mesa? (s/n): ").lower()
 
+        elif opcion == "4":
 
 
 
-        elif opcion in ["4","5","6"]:
+        elif opcion in ["5","6"]:
 
             if restaurante is None:
                 print("primero debes cargar un restaurante (opcion 1)")
