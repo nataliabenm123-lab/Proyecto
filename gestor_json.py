@@ -20,3 +20,11 @@ def cargar_grupos(ruta, nombre_archivo):
         grupos = json.load(archivo)
     return grupos
 
+def guardar_restaurante(restaurante, ruta):
+    with open(ruta, "w", encoding="utf-8") as archivo:
+        json.dump(
+            restaurante,
+            archivo,
+            ensure_ascii=False,
+            indent=4
+        )

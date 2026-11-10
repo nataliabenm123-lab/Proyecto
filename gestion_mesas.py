@@ -52,5 +52,6 @@ def cobrar_mesa(restaurante, mesa):
 
     return total 
 
-
+def actualizar_menu(restaurante, plato, precio):
+    restaurante["menu"][plato] = precio
 
