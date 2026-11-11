@@ -133,7 +133,27 @@ def main():
                     for plato, precio in restaurante["menu"].items():
                         print("-", plato, ":", precio, "€")
                     print("Ganancias de la noche:", restaurante["ganancias"], "€")
-        elif opcion in ["5"]:
+        
+        elif opcion == "5":
+            if restaurante is None:
+                print("Primero debes cargar un restaurante (opción 1).")
+            else:
+                nombre = input("Nombre del plato: ").strip().lower()
+                precio_texto = input("Precio del plato: ").strip().replace(",", ".")
+                try:
+                    precio = float(precio_texto)
+                except ValueError:
+                    precio = None
+                if nombre == "":
+                    print("El nombre no puede estar vacío.")
+                elif precio is None or precio <= 0:
+                    print("El precio debe ser un número mayor que 0.")
+                else:
+                    existia = gestion_mesas.ampliar_menu(restaurante["menu"], nombre, precio)
+                    if existia:
+                        print("Ese plato ya existía. Precio actualizado a", precio, "€")
+                    else:
+                        print("Plato añadido:", nombre, "-", precio, "€")
 
             if restaurante is None:
                 print("primero debes cargar un restaurante (opcion 1)")
