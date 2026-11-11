@@ -166,11 +166,6 @@ def main():
                         print("Ese plato ya existía. Precio actualizado a", precio, "€")
                     else:
                         print("Plato añadido:", nombre, "-", precio, "€")
-
-            if restaurante is None:
-                print("primero debes cargar un restaurante (opcion 1)")
-            else:
-                print("has elegido la opcion:", opcion)
         
         elif opcion == "8":
             if restaurante is None:
