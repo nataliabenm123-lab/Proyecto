@@ -37,7 +37,7 @@ def main():
                 restaurante = gestor_json.cargar_restaurante("restaurantes", archivo_elegido)
                 restaurante["mesas"]=[]
                 restaurante["ocupacion"]=0
-                restaurante["ganacias"]=0
+                restaurante["ganancias"]=0
 
                 print("Restaurante cargado:", restaurante["nombre"])
             else:
@@ -91,7 +91,30 @@ def main():
                     else:
                         print("Opción no válida.")
                     continuar = input("¿Quieres atender otra mesa? (s/n): ").lower()
-        elif opcion in ["4","5","6"]:
+        elif opcion == "4":
+            if restaurante is None:
+                    print("Primero debes cargar un restaurante (opción 1).")
+            else:
+                cobrables = []
+                for mesa in restaurante["mesas"]:
+                    if mesa["estado"] == "con pedido":
+                        cobrables.append(mesa)
+                if len(cobrables) == 0:
+                    print("No hay mesas con pedido para cobrar.")
+                else:
+                    print("Mesas para cobrar:")
+                    for numero, mesa in enumerate(cobrables, start=1):
+                        cuenta = gestion_mesas.calcular_cuenta(mesa, restaurante["menu"])
+                        print(numero, "- grupo de", mesa["clientes"], "personas -", cuenta, "€")
+                    eleccion = input("Elige la mesa a cobrar (número): ")
+                    if eleccion.isdigit() and 1 <= int(eleccion) <= len(cobrables):
+                        mesa_elegida = cobrables[int(eleccion) - 1]
+                        total = gestion_mesas.cobrar_mesa(restaurante, mesa_elegida)
+                        print("Mesa cobrada. Total:", total, "€")
+                        print("Ganancias de la noche:", restaurante["ganancias"], "€")
+                    else:
+                        print("Opción no válida.")
+        elif opcion in ["5","6"]:
 
             if restaurante is None:
                 print("primero debes cargar un restaurante (opcion 1)")
