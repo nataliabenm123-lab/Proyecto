@@ -114,7 +114,26 @@ def main():
                         print("Ganancias de la noche:", restaurante["ganancias"], "€")
                     else:
                         print("Opción no válida.")
-        elif opcion in ["5","6"]:
+        elif opcion == "6":
+            if restaurante is None:
+                print("Primero debes cargar un restaurante (opción 1).")
+            else:
+                print("Restaurante:", restaurante["nombre"])
+                print("Capacidad:", restaurante["capacidad"])
+                print("Ocupación:", restaurante["ocupacion"])
+                print("Mesas activas:")
+                if len(restaurante["mesas"]) == 0:
+                    print("No hay mesas activas.")
+                else:
+                    for numero, mesa in enumerate(restaurante["mesas"], start=1):
+                        print(numero, "- grupo de", mesa["clientes"], "personas - estado:", mesa["estado"])
+                        if len(mesa["pedido"]) > 0:
+                            print("   Pedido:", mesa["pedido"])
+                    print("Menú:")
+                    for plato, precio in restaurante["menu"].items():
+                        print("-", plato, ":", precio, "€")
+                    print("Ganancias de la noche:", restaurante["ganancias"], "€")
+        elif opcion in ["5"]:
 
             if restaurante is None:
                 print("primero debes cargar un restaurante (opcion 1)")
