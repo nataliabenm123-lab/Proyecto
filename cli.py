@@ -118,6 +118,8 @@ def main():
                         mesa_elegida = cobrables[int(eleccion) - 1]
                         total = gestion_mesas.cobrar_mesa(restaurante, mesa_elegida)
                         print("Mesa cobrada. Total:", total, "€")
+                        if mesa_elegida["cumpleanos"]:
+                            print("Incluye tarta de cumpleaños de cortesía (0 €).")
                         print("Ganancias de la noche:", restaurante["ganancias"], "€")
                     else:
                         print("Opción no válida.")
@@ -136,6 +138,8 @@ def main():
                         print(numero, "- grupo de", mesa["clientes"], "personas - estado:", mesa["estado"])
                         if len(mesa["pedido"]) > 0:
                             print("   Pedido:", mesa["pedido"])
+                        if mesa["cumpleanos"]:
+                            print("   Cumpleaños: tarta de cortesía")
                     print("Menú:")
                     for plato, precio in restaurante["menu"].items():
                         print("-", plato, ":", precio, "€")
