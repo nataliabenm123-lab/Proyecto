@@ -84,3 +84,6 @@ def sentar_reserva(restaurante, reserva):
         reserva["estado"] = "llegada"
         return True
     return False
+
+def cancelar_reserva(reserva):
+    reserva["estado"] = "cancelada"

@@ -236,9 +236,27 @@ def main():
                                 print("No hay sitio ahora mismo para esta reserva (aforo o mesas completas).")
                         else:
                             print("Opción no válida.")
+                elif accion == "4":
+                    pendientes = []
+                    for reserva in restaurante["reservas"]:
+                        if reserva["estado"] == "pendiente":
+                            pendientes.append(reserva)
+                    if len(pendientes) == 0:
+                        print("No hay reservas pendientes.")
+                    else:
+                        print("Reservas pendientes:")
+                        for numero, reserva in enumerate(pendientes, start=1):
+                            print(numero, "-", reserva["nombre"], "-", reserva["clientes"], "personas")
+                        eleccion = input("¿Qué reserva quieres cancelar? (número): ")
+                        if eleccion.isdigit() and 1 <= int(eleccion) <= len(pendientes):
+                            reserva_elegida = pendientes[int(eleccion) - 1]
+                            gestion_mesas.cancelar_reserva(reserva_elegida)
+                            gestor_json.guardar_reservas("reservas", restaurante["archivo"], restaurante["reservas"])
+                            print("Reserva de", reserva_elegida["nombre"], "cancelada.")
+                        else:
+                            print("Opción no válida.")
                 else:
                     print("Acción no disponible todavía.")
-
         else:
             print("Opción no válida. Escribe un número del 1 al 7")
 main()
