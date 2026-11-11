@@ -25,7 +25,6 @@ def main():
                print("Cambios del menú guardados.")
             print("Saliendo del programa...")
             break
-        #agregamos esta linea para que lea json
 
         elif opcion =="1":
             nombres=gestor_json.listar_archivos("restaurantes")
@@ -36,9 +35,7 @@ def main():
             eleccion=input("Elige un restaurante (número): ")
             if eleccion.isdigit() and 1 <= int(eleccion) <= len(nombres):
                 archivo_elegido = nombres[int(eleccion) - 1]
-                
-                #Esa línea de abajo lee el JSON del restaurante elegido y guarda el diccionario en restaurante, sustituyendo el None.
-                # Justo debajo van las tres líneas que añaden mesas, ocupacion y ganancias.
+                # Carga el JSON y añade los datos de la noche (mesas, reservas, ocupación, ganancias)
                 restaurante = gestor_json.cargar_restaurante("restaurantes", archivo_elegido)
                 restaurante["mesas"]=[]
                 restaurante["archivo"] = archivo_elegido

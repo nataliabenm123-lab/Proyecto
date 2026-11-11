@@ -1,4 +1,4 @@
-#opcion 1 de cargar restaurante
+# Único módulo que lee y escribe archivos JSON
 import json
 from pathlib import Path
 
