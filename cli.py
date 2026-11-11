@@ -208,6 +208,30 @@ def main():
                             print(numero, "-", reserva["nombre"], "-", reserva["clientes"], "personas")
                             if reserva["cumpleanos"]:
                                 print("   Cumpleaños: tarta de cortesía")
+
+                elif accion == "3":
+                    pendientes = []
+                    for reserva in restaurante["reservas"]:
+                        if reserva["estado"] == "pendiente":
+                            pendientes.append(reserva)
+                    if len(pendientes) == 0:
+                        print("No hay reservas pendientes.")
+                    else:
+                        print("Reservas pendientes:")
+                        for numero, reserva in enumerate(pendientes, start=1):
+                            print(numero, "-", reserva["nombre"], "-", reserva["clientes"], "personas")
+                        eleccion = input("¿Qué reserva ha llegado? (número): ")
+                        if eleccion.isdigit() and 1 <= int(eleccion) <= len(pendientes):
+                            reserva_elegida = pendientes[int(eleccion) - 1]
+                            if gestion_mesas.sentar_reserva(restaurante, reserva_elegida):
+                                gestor_json.guardar_reservas("reservas", restaurante["archivo"], restaurante["reservas"])
+                                print("Reserva de", reserva_elegida["nombre"], "sentada.")
+                                if reserva_elegida["cumpleanos"]:
+                                    print("¡Cumpleaños! Se sirve una tarta de cortesía.")
+                            else:
+                                print("No hay sitio ahora mismo para esta reserva (aforo o mesas completas).")
+                        else:
+                            print("Opción no válida.")
                 else:
                     print("Acción no disponible todavía.")
 

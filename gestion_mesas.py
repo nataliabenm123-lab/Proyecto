@@ -5,7 +5,7 @@ def sentar_grupos(restaurante, grupos):
         hay_aforo = restaurante["ocupacion"] + clientes <= restaurante["capacidad"]
         hay_mesa = len(restaurante["mesas"]) < restaurante["max_mesas"]
         if hay_aforo and hay_mesa:
-            restaurante["mesas"].append({"clientes": clientes, "estado":"ocupada","pedido":[]})
+            restaurante["mesas"].append({"clientes": clientes, "estado":"ocupada","pedido":[],"cumpleanos": False})
             restaurante["ocupacion"] = restaurante["ocupacion"] + clientes
         else:
             no_sentados.append(grupo)
@@ -68,3 +68,19 @@ def crear_reserva(restaurante, nombre, clientes, cumpleanos):
     }
     restaurante["reservas"].append(reserva)
     return reserva
+
+def sentar_reserva(restaurante, reserva):
+    clientes = reserva["clientes"]
+    hay_aforo = restaurante["ocupacion"] + clientes <= restaurante["capacidad"]
+    hay_mesa = len(restaurante["mesas"]) < restaurante["max_mesas"]
+    if hay_aforo and hay_mesa:
+        restaurante["mesas"].append({
+            "clientes": clientes,
+            "estado": "ocupada",
+            "pedido": [],
+            "cumpleanos": reserva["cumpleanos"],
+        })
+        restaurante["ocupacion"] += clientes
+        reserva["estado"] = "llegada"
+        return True
+    return False
