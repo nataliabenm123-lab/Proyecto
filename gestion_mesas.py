@@ -53,10 +53,10 @@ def cobrar_mesa(restaurante, mesa):
     return total 
 
 def ampliar_menu(menu, nombre, precio):
+    #Si el plato ya existe, solo se actualiza el precio; devuelve True para que cli.py avise
     existia = nombre in menu
     menu[nombre] = precio
     return existia
-#Si el plato ya existe, solo se actualiza el precio; devuelve True para que cli.py avise
 
 def crear_reserva(restaurante, nombre, clientes, cumpleanos):
     reserva = {
