@@ -20,3 +20,14 @@ def cargar_grupos(ruta, nombre_archivo):
         grupos = json.load(archivo)
     return grupos
 
+def guardar_restaurante(ruta, restaurante):
+    datos = {
+        "nombre": restaurante["nombre"],
+        "ubicacion": restaurante["ubicacion"],
+        "capacidad": restaurante["capacidad"],
+        "max_mesas": restaurante["max_mesas"],
+        "menu": restaurante["menu"],
+    }
+    ruta_archivo = Path(ruta) / restaurante["archivo"]
+    with open(ruta_archivo, "w", encoding="utf-8") as archivo:
+        json.dump(datos, archivo, indent=4, ensure_ascii=False)

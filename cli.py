@@ -13,11 +13,15 @@ def mostrar_menu():
 
 def main():
     restaurante = None
+    cambios_pendientes = False
     while True:
         mostrar_menu()
         opcion=input("elige una opcion:")
         
-        if opcion == "7":                      
+        if opcion == "7":  
+            if cambios_pendientes:
+               gestor_json.guardar_restaurante("restaurantes", restaurante)
+               print("Cambios del menú guardados.")
             print("Saliendo del programa...")
             break
         #agregamos esta linea para que lea json
@@ -36,6 +40,7 @@ def main():
                 # Justo debajo van las tres líneas que añaden mesas, ocupacion y ganancias.
                 restaurante = gestor_json.cargar_restaurante("restaurantes", archivo_elegido)
                 restaurante["mesas"]=[]
+                restaurante["archivo"] = archivo_elegido
                 restaurante["ocupacion"]=0
                 restaurante["ganancias"]=0
 
@@ -150,6 +155,7 @@ def main():
                     print("El precio debe ser un número mayor que 0.")
                 else:
                     existia = gestion_mesas.ampliar_menu(restaurante["menu"], nombre, precio)
+                    cambios_pendientes = True
                     if existia:
                         print("Ese plato ya existía. Precio actualizado a", precio, "€")
                     else:
