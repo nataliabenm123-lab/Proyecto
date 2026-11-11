@@ -58,3 +58,13 @@ def ampliar_menu(menu, nombre, precio):
     return existia
 #menu[nombre] = precio es la línea clave. Si el plato no existe, lo crea; si ya existe, sobrescribe el precio. Un solo comando hace las dos cosas que pide el PDF, y por eso no necesitamos un if.
 #return existia devuelve True si ya estaba, para que cli.py pueda avisar al usuario.
+
+def crear_reserva(restaurante, nombre, clientes, cumpleanos):
+    reserva = {
+        "nombre": nombre,
+        "clientes": clientes,
+        "cumpleanos": cumpleanos,
+        "estado": "pendiente",
+    }
+    restaurante["reservas"].append(reserva)
+    return reserva

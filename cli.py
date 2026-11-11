@@ -10,6 +10,7 @@ def mostrar_menu():
     print("5. Ampliar el menú")
     print("6. Consultar estado")
     print("7. Salir")
+    print("8. Reservas")
 
 def main():
     restaurante = None
@@ -41,6 +42,7 @@ def main():
                 restaurante = gestor_json.cargar_restaurante("restaurantes", archivo_elegido)
                 restaurante["mesas"]=[]
                 restaurante["archivo"] = archivo_elegido
+                restaurante["reservas"] = gestor_json.cargar_reservas("reservas", archivo_elegido)
                 restaurante["ocupacion"]=0
                 restaurante["ganancias"]=0
 
@@ -165,6 +167,50 @@ def main():
                 print("primero debes cargar un restaurante (opcion 1)")
             else:
                 print("has elegido la opcion:", opcion)
+        
+        elif opcion == "8":
+            if restaurante is None:
+                print("Primero debes cargar un restaurante (opción 1).")
+            else:
+                print("--- Reservas ---")
+                print("1. Crear reserva")
+                print("2. Ver reservas pendientes")
+                print("3. Marcar llegada")
+                print("4. Cancelar reserva")
+                accion = input("Elige una acción: ")
+                if accion == "1":
+                    nombre = input("Nombre de la reserva: ").strip()
+                    personas = input("Número de personas: ").strip()
+                    cumple = input("¿Es de cumpleaños? (s/n): ").strip().lower()
+                    if nombre == "":
+                        print("El nombre no puede estar vacío.")
+                    elif not personas.isdigit() or int(personas) < 1:
+                        print("El número de personas debe ser un entero mayor que 0.")
+                    elif int(personas) > restaurante["capacidad"]:
+                        print("La reserva supera la capacidad del restaurante.")
+                    elif cumple != "s" and cumple != "n":
+                        print("Responde s o n.")
+                    else:
+                        gestion_mesas.crear_reserva(restaurante, nombre, int(personas), cumple == "s")
+                        gestor_json.guardar_reservas("reservas", restaurante["archivo"], restaurante["reservas"])
+                        print("Reserva creada para", nombre, "-", personas, "personas")
+            
+                elif accion == "2":
+                    pendientes = []
+                    for reserva in restaurante["reservas"]:
+                        if reserva["estado"] == "pendiente":
+                            pendientes.append(reserva)
+                    if len(pendientes) == 0:
+                        print("No hay reservas pendientes.")
+                    else:
+                        print("Reservas pendientes:")
+                        for numero, reserva in enumerate(pendientes, start=1):
+                            print(numero, "-", reserva["nombre"], "-", reserva["clientes"], "personas")
+                            if reserva["cumpleanos"]:
+                                print("   Cumpleaños: tarta de cortesía")
+                else:
+                    print("Acción no disponible todavía.")
+
         else:
             print("Opción no válida. Escribe un número del 1 al 7")
 main()
