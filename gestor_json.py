@@ -1,4 +1,3 @@
-# Único módulo que lee y escribe archivos JSON
 import json
 from pathlib import Path
 

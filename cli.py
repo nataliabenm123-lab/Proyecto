@@ -27,6 +27,11 @@ def main():
             break
 
         elif opcion =="1":
+            if restaurante is not None:
+                print("Ya hay un restaurante cargado:", restaurante["nombre"])
+                print("Se mantiene el servicio actual.")
+                continue
+            ###sin esto, se puede cargar otro restaurante y poner todo a cero, reinicia el servicio
             nombres=gestor_json.listar_archivos("restaurantes")
             print("restaurantes disponibles:")
 
@@ -35,7 +40,6 @@ def main():
             eleccion=input("Elige un restaurante (número): ")
             if eleccion.isdigit() and 1 <= int(eleccion) <= len(nombres):
                 archivo_elegido = nombres[int(eleccion) - 1]
-                # Carga el JSON y añade los datos de la noche (mesas, reservas, ocupación, ganancias)
                 restaurante = gestor_json.cargar_restaurante("restaurantes", archivo_elegido)
                 restaurante["mesas"]=[]
                 restaurante["archivo"] = archivo_elegido
@@ -147,10 +151,10 @@ def main():
                             print("Pedido:", mesa["pedido"])
                         if mesa["cumpleanos"]:
                             print("Cumpleaños: tarta de cortesía")
-                    print("\nMENÚ COMPLETO")
-                    for plato, precio in restaurante["menu"].items():
-                        print("-", plato, ":", precio, "€")
-                    print("Ganancias de la noche:", restaurante["ganancias"], "€")
+                print("\nMENÚ COMPLETO")
+                for plato, precio in restaurante["menu"].items():
+                    print("-", plato, ":", precio, "€")
+                print("Ganancias de la noche:", restaurante["ganancias"], "€")
         
         elif opcion == "5":
             if restaurante is None:
@@ -260,7 +264,7 @@ def main():
                 else:
                     print("Acción no disponible todavía.")
         else:
-            print("Opción no válida. Escribe un número del 1 al 7")
+            print("Opción no válida. Escribe un número del 1 al 8")
 main()
 
 
