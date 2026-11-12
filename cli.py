@@ -23,7 +23,7 @@ def main():
             if cambios_pendientes:
                gestor_json.guardar_restaurante("restaurantes", restaurante)
                print("Cambios del menú guardados.")
-            print("Saliendo del programa...")
+            print("Saliendo del programa...\n--OUT--")
             break
 
         elif opcion =="1":
@@ -89,7 +89,7 @@ def main():
                         mesa_elegida = restaurante["mesas"][int(eleccion) - 1]
                         if mesa_elegida["estado"] == "ocupada":
                             gestion_mesas.tomar_pedido(mesa_elegida, restaurante["menu"])
-                            print("Pedido registrado:", mesa_elegida["pedido"])
+                            print("Pedido registrado: ", mesa_elegida["pedido"])
                         else:
                             print("Esa mesa ya tiene pedido.")
                     else:
@@ -106,7 +106,7 @@ def main():
                 if len(cobrables) == 0:
                     print("No hay mesas con pedido para cobrar.")
                 else:
-                    print("Mesas para cobrar:")
+                    print("Mesas disponibles para cobrar: ")
                     for numero, mesa in enumerate(cobrables, start=1):
                         cuenta = gestion_mesas.calcular_cuenta(mesa, restaurante["menu"])
                         print(numero, "- grupo de", mesa["clientes"], "personas -", cuenta, "€")
@@ -124,20 +124,30 @@ def main():
             if restaurante is None:
                 print("Primero debes cargar un restaurante (opción 1).")
             else:
-                print("Restaurante:", restaurante["nombre"])
-                print("Capacidad:", restaurante["capacidad"])
-                print("Ocupación:", restaurante["ocupacion"])
-                print("Mesas activas:")
+                print("\nESTADO DEL RESTAURANTE")
+                print("Nombre:", restaurante["nombre"])
+                print("Capacidad:", restaurante["capacidad"], "personas")
+                print("Ocupación actual:", restaurante["ocupacion"], "personas")
+                print("Ubicación:", restaurante["ubicacion"])
+                print("Máximo de mesas:", restaurante["max_mesas"])
+                print("Mesas activas:", len(restaurante["mesas"]))
+                print("\nMESAS ACTIVAS")
+
+
                 if len(restaurante["mesas"]) == 0:
                     print("No hay mesas activas.")
                 else:
                     for numero, mesa in enumerate(restaurante["mesas"], start=1):
-                        print(numero, "- grupo de", mesa["clientes"], "personas - estado:", mesa["estado"])
-                        if len(mesa["pedido"]) > 0:
-                            print("   Pedido:", mesa["pedido"])
+                        print("--Mesa ", numero, "--")
+                        print("Clientes:", mesa["clientes"])
+                        print("Estado:", mesa["estado"])
+                        if len(mesa["pedido"]) == 0:
+                            print("Sin pedido")
+                        else:
+                            print("Pedido:", mesa["pedido"])
                         if mesa["cumpleanos"]:
-                            print("   Cumpleaños: tarta de cortesía")
-                    print("Menú:")
+                            print("Cumpleaños: tarta de cortesía")
+                    print("\nMENÚ COMPLETO")
                     for plato, precio in restaurante["menu"].items():
                         print("-", plato, ":", precio, "€")
                     print("Ganancias de la noche:", restaurante["ganancias"], "€")
@@ -146,7 +156,7 @@ def main():
             if restaurante is None:
                 print("Primero debes cargar un restaurante (opción 1).")
             else:
-                nombre = input("Nombre del plato: ").strip().lower()
+                nombre = input("¿Qué plato desea añadir?:  ").strip().lower()
                 precio_texto = input("Precio del plato: ").strip().replace(",", ".")
                 try:
                     precio = float(precio_texto)
