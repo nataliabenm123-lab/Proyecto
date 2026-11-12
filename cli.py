@@ -134,7 +134,6 @@ def main():
                 print("Ocupación actual:", restaurante["ocupacion"], "personas")
                 print("Ubicación:", restaurante["ubicacion"])
                 print("Máximo de mesas:", restaurante["max_mesas"])
-                print("Mesas activas:", len(restaurante["mesas"]))
                 print("\nMESAS ACTIVAS")
 
 
